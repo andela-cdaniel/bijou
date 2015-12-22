@@ -22,6 +22,10 @@ module Bijou
       response(render_template(*args))
     end
 
+    def redirect_to(url_path, status = 301)
+      [200, {"location" => "http://nairaland.com"}, []]
+    end
+
     def render_template(name, locals = {})
       file = File.join "app", "views", "layouts", "application.html.erb"
       page = File.join "app", "views", controller_name, "#{name.to_s}.html.erb"

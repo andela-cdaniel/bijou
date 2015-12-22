@@ -4,6 +4,7 @@ require "bijou/request"
 require "bijou/response"
 require "bijou/route"
 require "bijou/router"
+require "bijou/bijou_record"
 require "bijou/base_controller"
 
 module Bijou

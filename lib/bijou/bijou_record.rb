@@ -39,8 +39,8 @@ module Bijou
       end
 
       def setup_db
-        Dir.mkdir "db" unless Dir.exists? "db"
-        File.new "db/data.sqlite", "w+" unless File.exists? "db/data.sqlite"
+        Dir.mkdir "#{PATH}/db" unless Dir.exists? "#{PATH}/db"
+        File.new "#{PATH}/db/data.sqlite", "w+" unless File.exists? "#{PATH}/db/data.sqlite"
 
         @@db = SQLite3::Database.new File.join "db/data.sqlite"
         @@db.results_as_hash = true

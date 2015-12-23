@@ -1,9 +1,14 @@
 require "sqlite3"
+require_relative "hash_to_obj"
 
 module Bijou
   class BijouRecord
     @@create_table_query = []
     @@valid_parameters = []
+
+    @@valid_parameters.each do |param|
+      attr_accessor param
+    end
 
     def initialize(params = {})
       params.each do |k, v|
@@ -25,12 +30,12 @@ module Bijou
       query = "INSERT INTO #{@@table} (#{columns}) VALUES (#{values})"
       query = query.gsub("[", "").gsub("]", "").gsub("\"", "'")
 
-      puts query
       @@db.execute query
     end
 
     class << self
-      def create
+      def create(params = {})
+        new(params).save
       end
 
       def setup_db
@@ -76,7 +81,23 @@ module Bijou
       end
 
       def all
-        @@db.execute "SELECT * FROM #{@@table}"
+        (@@db.execute "SELECT * FROM #{@@table}").map { |record| HashToObj.new record }
+      end
+
+      def find(id)
+        HashToObj.new (@@db.execute "SELECT * FROM #{@@table} WHERE id = ?", id).first
+      end
+
+      def count
+        @@db.execute "SELECT COUNT(*) FROM #{@@table}"
+      end
+
+      def table
+        @@table
+      end
+
+      def db
+        @@db ||= SQLite3::Database.new File.join "db/data.sqlite"
       end
     end
   end

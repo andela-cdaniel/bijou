@@ -50,7 +50,7 @@ module Bijou
     end
 
     def generate_regex(path)
-      regex = path.split("").map do |char|
+      regex = path.gsub(/\d{2,}/, "1").split("").map do |char|
         char = char.to_i > 0 ? ":[a-z]+" : char
       end
       Regexp.new(regex.join)

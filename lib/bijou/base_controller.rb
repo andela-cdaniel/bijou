@@ -23,7 +23,7 @@ module Bijou
     end
 
     def redirect_to(url_path, status = 301)
-      [200, {"location" => "http://nairaland.com"}, []]
+      response([], status, { "location" => url_path })
     end
 
     def render_template(name, locals = {})

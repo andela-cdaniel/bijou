@@ -53,17 +53,17 @@ module Bijou
                          primary_key: false,
                          nullable: true
 
-      @@valid_parameters << column_name.to_sym
-      query = ""
+        @@valid_parameters << column_name.to_sym
+        query = ""
 
-      query << "#{column_name} #{type.upcase} "
+        query << "#{column_name} #{type.upcase} "
 
-      default.to_s.length > 0 ? query << "DEFAULT #{default} " : false
-      unique ? query << "UNIQUE " : false
-      primary_key ? query << "PRIMARY KEY " : false
-      nullable ? false : query << "NOT NULL"
+        default.to_s.length > 0 ? query << "DEFAULT #{default} " : false
+        unique ? query << "UNIQUE " : false
+        primary_key ? query << "PRIMARY KEY " : false
+        nullable ? false : query << "NOT NULL"
 
-      @@create_table_query << query.strip
+        @@create_table_query << query.strip
       end
 
       def map_model_to_table(table_name)

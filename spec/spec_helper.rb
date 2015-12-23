@@ -1,2 +1,2 @@
-$LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
-require 'bijou'
+$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+require "bijou"

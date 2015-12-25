@@ -42,7 +42,7 @@ module Bijou
         Dir.mkdir "#{PATH}/db" unless Dir.exists? "#{PATH}/db"
         File.new "#{PATH}/db/data.sqlite", "w+" unless File.exists? "#{PATH}/db/data.sqlite"
 
-        @@db = SQLite3::Database.new File.join "db/data.sqlite"
+        @@db = SQLite3::Database.new File.join "#{PATH}/db/data.sqlite"
         @@db.results_as_hash = true
       end
 
@@ -80,6 +80,10 @@ module Bijou
         @@db.execute "CREATE TABLE IF NOT EXISTS #{@@table} (#{query})"
       end
 
+      def drop_table
+        @@db.execute "DROP TABLE IF EXISTS #{@@table}"
+      end
+
       def all
         (@@db.execute "SELECT * FROM #{@@table}").map { |record| HashToObj.new record }
       end
@@ -97,7 +101,7 @@ module Bijou
       end
 
       def db
-        @@db ||= SQLite3::Database.new File.join "db/data.sqlite"
+        @@db ||= SQLite3::Database.new File.join "#{PATH}db/data.sqlite"
       end
     end
   end

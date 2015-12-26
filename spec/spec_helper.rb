@@ -5,6 +5,6 @@ require "bijou"
 #require "bijou/dependencies"
 
 
-SimpleCov.start do
-  formatter SimpleCov::Formatter::MultiFormatter[SimpleCov::Formatter::HTMLFormatter]
-end
+# SimpleCov.start do
+#   formatter SimpleCov::Formatter::MultiFormatter[SimpleCov::Formatter::HTMLFormatter]
+# end

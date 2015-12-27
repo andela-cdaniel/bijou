@@ -25,4 +25,25 @@ describe Bijou::Route do
       expect(bijou_route.controller).to eql("PagesController")
     end
   end
+
+  describe "#action" do
+    subject(:bijou_route) do
+      Bijou::Route.new(["/", {:controller=>"pages", :action=>"index"}])
+    end
+
+    it "Creates a controller action based on the route array" do
+      expect(bijou_route.action).to eql("index")
+    end
+  end
+
+  describe "#setup_controller" do
+    subject(:bijou_route) do
+      Bijou::Route.new(["/", {:controller=>"pages", :action=>"index"}])
+    end
+
+    it "Fall backs on the base object's const_missing method" do
+      allow(Object).to receive(:const_missing).and_return("PagesController")
+      expect(bijou_route.setup_controller).to eql(PagesController)
+    end
+  end
 end

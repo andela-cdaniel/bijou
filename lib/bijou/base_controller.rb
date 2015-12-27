@@ -2,6 +2,8 @@ require "tilt/erubis"
 
 module Bijou
   class BaseController
+    attr_reader :request
+
     def initialize(env)
       @request = env
     end

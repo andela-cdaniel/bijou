@@ -27,6 +27,7 @@ module Bijou
 
       if path.match pattern
         route_arr = @app_routes[http_verb].find { |item| generate_regex(path) =~ item.first }
+
         if route_arr
           params_key = (route_arr.first.match /\:[a-z]+/).to_s.gsub(":", "").to_sym
           params_val = (path.match /\/[\d]+/).to_s.gsub("/", "")

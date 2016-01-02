@@ -2,6 +2,8 @@ require "tilt/erubis"
 
 module Bijou
   class BaseController
+    attr_reader :request
+
     def initialize(env)
       @request = env
     end
@@ -27,8 +29,8 @@ module Bijou
     end
 
     def render_template(name, locals = {})
-      file = File.join "app", "views", "layouts", "application.html.erb"
-      page = File.join "app", "views", controller_name, "#{name.to_s}.html.erb"
+      file = File.join PATH, "app", "views", "layouts", "application.html.erb"
+      page = File.join PATH, "app", "views", controller_name, "#{name.to_s}.html.erb"
       template = Tilt::ErubisTemplate.new(file)
       template.render { Tilt::ErubisTemplate.new(page).render(self, locals) }
     end

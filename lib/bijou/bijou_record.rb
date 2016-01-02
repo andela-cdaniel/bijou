@@ -39,10 +39,10 @@ module Bijou
       end
 
       def setup_db
-        Dir.mkdir "db" unless Dir.exists? "db"
-        File.new "db/data.sqlite", "w+" unless File.exists? "db/data.sqlite"
+        Dir.mkdir "#{PATH}/db" unless Dir.exists? "#{PATH}/db"
+        File.new "#{PATH}/db/data.sqlite", "w+" unless File.exists? "#{PATH}/db/data.sqlite"
 
-        @@db = SQLite3::Database.new File.join "db/data.sqlite"
+        @@db = SQLite3::Database.new File.join "#{PATH}/db/data.sqlite"
         @@db.results_as_hash = true
       end
 
@@ -53,17 +53,17 @@ module Bijou
                          primary_key: false,
                          nullable: true
 
-      @@valid_parameters << column_name.to_sym
-      query = ""
+        @@valid_parameters << column_name.to_sym
+        query = ""
 
-      query << "#{column_name} #{type.upcase} "
+        query << "#{column_name} #{type.upcase} "
 
-      default.to_s.length > 0 ? query << "DEFAULT #{default} " : false
-      unique ? query << "UNIQUE " : false
-      primary_key ? query << "PRIMARY KEY " : false
-      nullable ? false : query << "NOT NULL"
+        default.to_s.length > 0 ? query << "DEFAULT #{default} " : false
+        unique ? query << "UNIQUE " : false
+        primary_key ? query << "PRIMARY KEY " : false
+        nullable ? false : query << "NOT NULL"
 
-      @@create_table_query << query.strip
+        @@create_table_query << query.strip
       end
 
       def map_model_to_table(table_name)
@@ -78,6 +78,10 @@ module Bijou
           @@valid_parameters << :id
         end
         @@db.execute "CREATE TABLE IF NOT EXISTS #{@@table} (#{query})"
+      end
+
+      def drop_table
+        @@db.execute "DROP TABLE IF EXISTS #{@@table}"
       end
 
       def all
@@ -97,7 +101,7 @@ module Bijou
       end
 
       def db
-        @@db ||= SQLite3::Database.new File.join "db/data.sqlite"
+        @@db ||= SQLite3::Database.new File.join "#{PATH}db/data.sqlite"
       end
     end
   end

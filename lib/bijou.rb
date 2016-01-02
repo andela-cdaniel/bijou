@@ -17,7 +17,7 @@ module Bijou
 
     def call(env)
       req = Request.new(env).vars
-      return Respons.new("", 500, {}) if req.path_info == "/favicon/ico"
+      return Response.new("", 500, {}) if req.path_info == "/favicon/ico"
       res = routes.handle_request(req)
 
       if res.nil?

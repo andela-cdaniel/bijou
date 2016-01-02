@@ -8,3 +8,5 @@
 /spec/reports/
 /tmp/
 /spec/integration/todo/db/*.sqlite
+/.coveralls.yml
+/.ruby-version

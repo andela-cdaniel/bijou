@@ -1,5 +1,4 @@
 require "sqlite3"
-require_relative "hash_to_obj"
 
 module Bijou
   class BijouRecord
@@ -7,8 +6,8 @@ module Bijou
     @@valid_parameters = []
 
     def initialize(params = {})
-      params.each do |k, v|
-        instance_variable_set "@#{k}", v if @@valid_parameters.include? k
+      params.reject { |k, _v| k.class == Fixnum }.each do |k, v|
+        instance_variable_set "@#{k}", v if @@valid_parameters.include? k.to_sym
       end
 
       create_accessor_methods
@@ -28,6 +27,8 @@ module Bijou
       end
     end
 
+    private :create_accessor_methods
+
     def save
       columns = []
       values = []
@@ -42,6 +43,23 @@ module Bijou
       query = "INSERT INTO #{@@table} (#{columns}) VALUES (#{values})"
       query = query.gsub("[", "").gsub("]", "").gsub("\"", "'")
 
+      @@db.execute query
+    end
+
+    def update(params = {})
+      params = params.reject { |_k, v| v.nil? }
+      values = []
+
+      params.each do |k, v|
+        values << "#{k} = '#{v}'"
+      end
+
+      query = "UPDATE #{@@table} SET #{values.join(", ")} WHERE id = #{@id}"
+      @@db.execute query
+    end
+
+    def delete
+      query = "DELETE FROM #{@@table} WHERE id = #{@id}"
       @@db.execute query
     end
 
@@ -70,13 +88,12 @@ module Bijou
 
         query << "#{column_name} #{type.upcase} "
 
-        default.to_s.length > 0 ? query << "DEFAULT #{default} " : false
-        unique ? query << "UNIQUE " : false
-        primary_key ? query << "PRIMARY KEY " : false
-        nullable ? false : query << "NOT NULL"
+        default.to_s.length > 0 ? query << "DEFAULT #{default} " : ""
+        unique ? query << "UNIQUE " : ""
+        primary_key ? query << "PRIMARY KEY " : ""
+        nullable ? "" : query << "NOT NULL"
 
         @@create_table_query << query.strip
-        require "pry"; binding.pry
       end
 
       def map_model_to_table(table_name)
@@ -98,23 +115,15 @@ module Bijou
       end
 
       def all
-        (@@db.execute "SELECT * FROM #{@@table}").map { |record| HashToObj.new record }
+        (@@db.execute "SELECT * FROM #{@@table}").map { |result| new result }
       end
 
       def find(id)
-        HashToObj.new (@@db.execute "SELECT * FROM #{@@table} WHERE id = ?", id).first
+        new (@@db.execute "SELECT * FROM #{@@table} WHERE id = #{id}").first
       end
 
       def count
         @@db.execute "SELECT COUNT(*) FROM #{@@table}"
-      end
-
-      def table
-        @@table
-      end
-
-      def db
-        @@db ||= SQLite3::Database.new File.join "#{PATH}db/data.sqlite"
       end
     end
   end

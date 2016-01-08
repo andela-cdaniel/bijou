@@ -6,13 +6,25 @@ module Bijou
     @@create_table_query = []
     @@valid_parameters = []
 
-    @@valid_parameters.each do |param|
-      attr_accessor param
-    end
-
     def initialize(params = {})
       params.each do |k, v|
         instance_variable_set "@#{k}", v if @@valid_parameters.include? k
+      end
+
+      create_accessor_methods
+    end
+
+    def create_accessor_methods
+      self.class.class_eval do
+        @@valid_parameters.each do |method|
+          define_method "#{method}" do
+            instance_variable_get "@#{method}"
+          end
+
+          define_method "#{method}=" do |value|
+            instance_variable_set "@#{method}", value
+          end
+        end
       end
     end
 
@@ -64,6 +76,7 @@ module Bijou
         nullable ? false : query << "NOT NULL"
 
         @@create_table_query << query.strip
+        require "pry"; binding.pry
       end
 
       def map_model_to_table(table_name)

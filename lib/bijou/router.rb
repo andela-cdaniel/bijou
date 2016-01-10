@@ -42,12 +42,8 @@ module Bijou
 
     private
 
-    def parse_action(action)
-      result = {}
-      [:controller, :action].each_with_index do |key, index|
-        result[key] = action.split("#")[index]
-      end
-      result
+    def parse_action(str)
+      {controller: $1, action: $2} if str.match /\A([a-z]+)#([a-z]+)\z/
     end
 
     def generate_regex(path)

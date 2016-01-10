@@ -8,3 +8,6 @@
 /spec/reports/
 /tmp/
 /spec/integration/todo/db/*.sqlite
+/.coveralls.yml
+/.ruby-version
+/lib/bijou/hash_to_obj.rb

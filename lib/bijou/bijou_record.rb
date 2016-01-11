@@ -9,25 +9,7 @@ module Bijou
       params.reject { |k, _v| k.class == Fixnum }.each do |k, v|
         instance_variable_set "@#{k}", v if @@valid_parameters.include? k.to_sym
       end
-
-      create_accessor_methods
     end
-
-    def create_accessor_methods
-      self.class.class_eval do
-        @@valid_parameters.each do |method|
-          define_method "#{method}" do
-            instance_variable_get "@#{method}"
-          end
-
-          define_method "#{method}=" do |value|
-            instance_variable_set "@#{method}", value
-          end
-        end
-      end
-    end
-
-    private :create_accessor_methods
 
     def save
       columns = []
@@ -108,6 +90,8 @@ module Bijou
           @@valid_parameters << :id
         end
         @@db.execute "CREATE TABLE IF NOT EXISTS #{@@table} (#{query})"
+
+        attr_accessor *@@valid_parameters
       end
 
       def drop_table

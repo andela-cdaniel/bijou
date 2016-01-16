@@ -1,0 +1,37 @@
+<section class="intro" style="font-family: sans-serif; color: #666">
+  <h1 style="color: #555">
+    My Agenda
+  </h1>
+  <p>
+    <a href="/agenda/new" style="background-color: #12a4e9; color: #fff; text-decoration: none; border: 0; padding: 7px 12px;">
+      Create a new agenda
+    </a>
+  </p>
+
+  <div class="agendas">
+    <% unless @agendas.empty? %>
+      <p>
+        Here is a list of all items in your agenda:
+        <br>
+        <small>
+          <em>Note: Items that are struck out have been marked as complete!</em>
+        </small>
+      </p>
+      <ul class="lists" style="list-style: none; -webkit-padding-start: 0; -moz-padding-start: 0">
+        <% @agendas.each do |agenda| %>
+          <li <%= "style='text-decoration: line-through; color: tomato'" if agenda.done %>>
+            <%= agenda.name.capitalize %>
+            <a href="/agenda/<%= agenda.id %>/edit" style="color: #12a4e9">Edit</a>
+            <a href="/agenda/<%= agenda.id %>/delete" style="color: tomato">
+              Delete
+            </a>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>
+        Sorry, you do not have any agenda created yet. Create a new agenda with the link above.
+      </p>
+    <% end %>
+  </div>
+</section>

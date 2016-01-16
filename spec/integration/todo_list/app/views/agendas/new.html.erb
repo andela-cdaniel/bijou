@@ -1,0 +1,21 @@
+<section class="create-agenda" style="font-family: sans-serif; color: #666">
+  <h2 style="color: #555">Create a new Agenda</h2>
+  <form action="/agenda/new" method="POST">
+    <div class="group">
+      <label for="agenda_name">Name: </label>
+      <input type="text" name="agenda[name]", id="agenda_name" placeholder="Visit the eiffel tower" value="" style="padding: 7px 12px; border-radius: 4px; border: 1px solid #999; outline: 0; display: block; margin: 10px 0; font-size: 14px" required>
+    </div>
+
+    <div class="group">
+      <button type="submit" style="background-color: #12a4e9; color: #fff; text-decoration: none; border: 0; padding: 7px 12px; cursor: pointer">
+        Create
+      </button>
+    </div>
+  </form>
+
+   <p>
+    <a href="/" style="color: #12a4e9">
+      Back to homepage
+    </a>
+  </p>
+</section>

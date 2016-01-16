@@ -1,5 +1,7 @@
 # Bijou
 
+[![Coverage Status](https://coveralls.io/repos/andela-cdaniel/bijou/badge.svg?branch=master&service=github)](https://coveralls.io/github/andela-cdaniel/bijou?branch=master) [![Code Climate](https://codeclimate.com/github/andela-cdaniel/bijou/badges/gpa.svg)](https://codeclimate.com/github/andela-cdaniel/bijou)
+
 The Rails framework has always fascinated me in the way that it works, the beauty, the elegance and the way it makes rapid application development very easy has always struck me as a work of genius. While all these make Rails a beauty to use, I've always found myself lost in all the seeming magic that Rails employs to make all the little bits work efficiently.
 
 Bijou is my attempt to understand Rails better by building a simple Ruby + Rack powered web framework. It comes with some of rails features built in albeit not as polished.

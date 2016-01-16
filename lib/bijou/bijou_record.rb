@@ -58,6 +58,10 @@ module Bijou
         @@db.results_as_hash = true
       end
 
+      def db
+        @@db ||= SQLite3::Database.new File.join "#{PATH}/db/data.sqlite"
+      end
+
       def table_property column_name:,
                          type:,
                          default: "",

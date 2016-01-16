@@ -11,3 +11,4 @@
 /.coveralls.yml
 /.ruby-version
 /lib/bijou/hash_to_obj.rb
+/vendor

@@ -9,7 +9,7 @@ module FeatureHelpers
     def drop_and_regenerate_table
       Agenda.drop_table
       Agenda.db.execute "CREATE TABLE IF NOT EXISTS agendas
-                       (id INTEGER PRIMARY KEY, name TEXT, done BOOLEAN)"
+                        (id INTEGER PRIMARY KEY, name TEXT, done BOOLEAN)"
     end
   end
 end

@@ -23,12 +23,12 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.0"
   spec.add_development_dependency "capybara", "2.5.0"
-  spec.add_development_dependency "simplecov", "0.11.1"
+  spec.add_development_dependency "pry", "0.10.3"
+  spec.add_development_dependency "pry-nav", "0.2.4"
+  spec.add_development_dependency "coveralls"
 
   spec.add_runtime_dependency "rack", "1.6.4"
   spec.add_runtime_dependency "sqlite3", "1.3.11"
-  spec.add_runtime_dependency "pry", "0.10.3"
-  spec.add_runtime_dependency "pry-nav", "0.2.4"
   spec.add_runtime_dependency "erubis", "2.7.0"
   spec.add_runtime_dependency "tilt", "2.0.1"
 end

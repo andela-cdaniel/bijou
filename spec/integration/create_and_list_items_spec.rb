@@ -1,6 +1,6 @@
 require "capybara/rspec"
 require_relative "feature_helpers"
-require_relative "todo/helper"
+require_relative "todo_list/helper"
 
 describe "Creating and listing todo items", type: :feature do
   before :all do

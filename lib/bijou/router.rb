@@ -4,8 +4,8 @@ module Bijou
       @app_routes = Hash.new { |hash, key| hash[key] = [] }
     end
 
-    def draw &block
-      instance_eval &block
+    def draw(&block)
+      instance_eval(&block)
     end
 
     def root(action)
@@ -21,16 +21,18 @@ module Bijou
     end
 
     def handle_request(req)
-      pattern = /\A(\/[a-z]+)(\/[0-9]+)(\/[a-z]+)?((\/[0-9]+)(\/[a-z]*){1,})*\z/
+      pattern = %r(\A(/[a-z]+)(/[0-9]+)(/[a-z]+)?((/[0-9]+)(/[a-z]*){1,})*\z)
       path = req.path_info
       http_verb = req.request_method.downcase.to_sym
 
       if path.match pattern
-        route_arr = @app_routes[http_verb].find { |item| generate_regex(path) =~ item.first }
+        route_arr = @app_routes[http_verb].find do |item|
+          generate_regex(path) =~ item.first
+        end
 
         if route_arr
-          params_key = (route_arr.first.match /\:[a-z]+/).to_s.gsub(":", "").to_sym
-          params_val = (path.match /\/[\d]+/).to_s.gsub("/", "")
+          params_key = route_arr.first.match(/\:[a-z]+/).to_s.delete(":").to_sym
+          params_val = path.match(%r(/[\d]+)).to_s.delete("/")
           req.params[params_key] = params_val
           Route.new(route_arr)
         end
@@ -43,12 +45,12 @@ module Bijou
     private
 
     def parse_action(str)
-      {controller: $1, action: $2} if str.match /\A([a-z]+)#([a-z]+)\z/
+      { controller: $1, action: $2 } if str =~ /\A([a-z]+)#([a-z]+)\z/
     end
 
     def generate_regex(path)
       regex = path.gsub(/\d{2,}/, "1").split("").map do |char|
-        char = char.to_i > 0 ? ":[a-z]+" : char
+        char.to_i > 0 ? ":[a-z]+" : char
       end
       Regexp.new(regex.join)
     end

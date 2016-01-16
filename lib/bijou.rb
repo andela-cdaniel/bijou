@@ -1,3 +1,4 @@
+require "bigdecimal"
 require "bijou/dependencies"
 require "bijou/version"
 require "bijou/request"

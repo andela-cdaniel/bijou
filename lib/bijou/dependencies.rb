@@ -12,12 +12,12 @@ class ::String
 
   def to_snake_case
     arr = split("")
-    arr.each_with_index do |c, i|
-        unless arr[i + 1].nil?
-            if (arr[i] == arr[i].downcase) && arr[i + 1] == arr[i + 1].upcase
-                arr[i] = arr[i] << "_"
-            end
+    arr.each_with_index do |_c, i|
+      unless arr[i + 1].nil?
+        if (arr[i] == arr[i].downcase) && arr[i + 1] == arr[i + 1].upcase
+          arr[i] = arr[i] << "_"
         end
+      end
     end
 
     arr.join.downcase

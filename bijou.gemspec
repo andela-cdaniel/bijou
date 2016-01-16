@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "pry", "0.10.3"
   spec.add_development_dependency "pry-nav", "0.2.4"
   spec.add_development_dependency "coveralls"
+  spec.add_development_dependency "rubocop"
 
   spec.add_runtime_dependency "rack", "1.6.4"
   spec.add_runtime_dependency "sqlite3", "1.3.11"

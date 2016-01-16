@@ -79,7 +79,7 @@ describe Bijou::BaseController do
     end
   end
 
-  describe "#controller_name" do
+  describe "#controller" do
     it "Should be a private method" do
       expect{ Bijou::BaseController.new(ENV).controller_name }.to raise_error NoMethodError
     end
@@ -88,7 +88,7 @@ describe Bijou::BaseController do
         and replaces all instances of the word 'Controller'
         with an empty string" do
       class MySpecController < Bijou::BaseController; end
-      expect(MySpecController.new(ENV).send(:controller_name)).to eql("my_spec")
+      expect(MySpecController.new(ENV).send(:controller)).to eql("my_spec")
     end
   end
 end
